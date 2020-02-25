@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
+import { Item, Image } from 'semantic-ui-react';
 
 const Post = props => {
   return (
-    <div className='post'>
-      <div
-        style={{ backgroundImage: `url(${props.image}) ` }}
-        className='post__image'
-      ></div>
-      <div className='post__info'>
-        <h2 className='post__title'>{props.title}</h2>
-        <div className='post__description'>{props.description}</div>
-      </div>
-    </div>
+    <Item>
+      <Item.Image size='tiny' src={props.image} />
+
+      <Item.Content>
+        <Item.Header as='a'>{props.title}</Item.Header>
+        <Item.Description>{props.description}</Item.Description>
+      </Item.Content>
+    </Item>
   );
 };
 

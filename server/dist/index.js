@@ -6,10 +6,12 @@ require('regenerator-runtime/runtime');
 
 var _parsePost = require('./parsePost');
 
-var _parsePost2 = _interopRequireDefault(_parsePost);
-
-var _config = require('./config');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-(0, _parsePost2.default)('https://rus.err.ee/1055896/v-pjarnu-i-haapsalu-iz-za-shtorma-ogranichil-dvizhenie', _config.elems.err);
+(0, _parsePost.parseLinks)('https://rus.delfi.ee/', '.headline__title a', 5).then(function (links) {
+  (0, _parsePost.getPosts)(links).then(function (posts) {
+    return console.log(posts);
+  }).catch(function (e) {
+    return console.log(e);
+  });
+}).catch(function (e) {
+  return console.log(e);
+});

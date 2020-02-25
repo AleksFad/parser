@@ -3,6 +3,7 @@ import './App.css';
 import Post from './components/Post';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Container, Header, Item, Button, Segment } from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -19,50 +20,52 @@ class App extends Component {
       });
   }
 
+  componentWillMount() {
+    this.fetchPosts();
+  }
+
   render() {
     const { posts } = this.props;
     const { items } = posts;
     console.log(this.props);
     return (
-      <div className='App'>
+      <Container>
+        <Header as='h2'>Source: {this.props.producer.source}</Header>
         <div>
-          <button onClick={this.fetchPosts.bind(this)}>Get posts</button>
-
-          <h3>Regions: {this.props.producer.source}</h3>
-          <ul>
-            <li>
-              <button onClick={() => this.props.changeSource('Delfi')}>
-                Delfi
-              </button>
-            </li>
-            <li>
-              <button onClick={() => this.props.changeSource('Postimees')}>
-                Postimees
-              </button>
-            </li>
-            <li>
-              <button onClick={() => this.props.changeSource('ERR')}>
-                ERR
-              </button>
-            </li>
-          </ul>
+          <Button onClick={this.fetchPosts.bind(this)} size='massive'>
+            Get News
+          </Button>
+          <Button.Group>
+            <Button onClick={() => this.props.changeSource('Delfi')}>
+              Delfi
+            </Button>
+            <Button onClick={() => this.props.changeSource('Postimees')}>
+              Postimees
+            </Button>
+            <Button onClick={() => this.props.changeSource('ERR')}>ERR</Button>
+          </Button.Group>
         </div>
-
-        {!items.length ? (
-          <span>Loading...</span>
-        ) : (
-          items.map((post, key) => {
-            return (
-              <Post
-                key={key}
-                title={post.title}
-                description={post.description}
-                image={post.image}
-              />
-            );
-          })
-        )}
-      </div>
+        <Item.Group>
+          {!items.length ? (
+            <Segment loading>
+              <br />
+              <br />
+              <br />
+            </Segment>
+          ) : (
+            items.map((post, key) => {
+              return (
+                <Post
+                  key={key}
+                  title={post.title}
+                  description={post.description}
+                  image={post.image}
+                />
+              );
+            })
+          )}
+        </Item.Group>
+      </Container>
     );
   }
 }

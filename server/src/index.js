@@ -1,9 +1,11 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import parsePost from './parsePost';
-import { elems } from './config';
+import { parsePost, parseLinks, getPosts } from './parsePost';
 
-parsePost(
-  'https://rus.err.ee/1055896/v-pjarnu-i-haapsalu-iz-za-shtorma-ogranichil-dvizhenie',
-  elems.err
-);
+parseLinks('https://rus.delfi.ee/', '.headline__title a', 5)
+  .then(links => {
+    getPosts(links)
+      .then(posts => console.log(posts))
+      .catch(e => console.log(e));
+  })
+  .catch(e => console.log(e));
